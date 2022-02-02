@@ -1,0 +1,12 @@
+# .github/workflows/my_flutter_package.yaml
+name: meta_weather_api
+on: 
+  pull_request:
+    types: [opened, reopened, synchronize]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
