@@ -1,5 +1,10 @@
-name: my_flutter_package
-on: pull_request
+name: very_good_weather_app
+on: 
+  pull_request:
+    types: [opened, reopened, synchronize]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
