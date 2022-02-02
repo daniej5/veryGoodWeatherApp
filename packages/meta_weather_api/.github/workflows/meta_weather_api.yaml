@@ -1,4 +1,3 @@
-# .github/workflows/my_flutter_package.yaml
 name: meta_weather_api
 on: 
   pull_request:
