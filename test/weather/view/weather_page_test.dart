@@ -45,7 +45,7 @@ void main() {
   group('WeatherView', () {
     final weather = Weather(
       temperature: Temperature(value: 4.2),
-      condition: WeatherCondition.cloudy,
+      condition: WeatherCondition.unknown,
       lastUpdated: DateTime(2020),
       location: 'London',
     );
