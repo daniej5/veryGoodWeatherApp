@@ -23,6 +23,10 @@ void main() async {
   );
 }
 
+/// A function which returs the root [WeatherApp] to be run.
+/// This function is meant to be used to fetch the app for e2e testing purposes.
+/// It will also be needed to fetch the app to pass into the main
+/// [runApp] method.
 WeatherApp getWeatherApp() {
   return WeatherApp(weatherRepository: WeatherRepository());
 }

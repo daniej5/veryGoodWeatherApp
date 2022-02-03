@@ -7,7 +7,12 @@ import 'package:very_good_weather_app/weather/cubit/weather_cubit.dart';
 import 'package:very_good_weather_app/weather/widgets/widgets.dart';
 import 'package:weather_repository/weather_repository.dart';
 
+/// {@template weather_page}
+/// The widget which creates a [BlocProvider] to manage the state of
+/// displaying certain weather conditions.
+/// {@endtemplate}
 class WeatherPage extends StatelessWidget {
+  /// {@macro weather_page}
   const WeatherPage({Key? key}) : super(key: key);
 
   @override
@@ -19,7 +24,13 @@ class WeatherPage extends StatelessWidget {
   }
 }
 
+/// {@template weather_view}
+/// The Widget of the main weather page. It will either display the initial
+/// select a city screen, weather information for a certain city, or an error
+/// screen if something went wrong.
+/// {@endtemplate}
 class WeatherView extends StatelessWidget {
+  /// {@macro weather_view}
   const WeatherView({Key? key}) : super(key: key);
 
   @override

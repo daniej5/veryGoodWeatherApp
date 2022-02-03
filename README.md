@@ -1,16 +1,56 @@
-# very_good_weather_app
+# Very Good Weather App
 
-A new Flutter project.
+[![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 
-## Getting Started
+A very good weather app for [Very Good Ventures][very_good_ventures_link].
 
-This project is a starting point for a Flutter application.
+*Built by [Jonathan Daniels][jonathan_daniels_link].*
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Getting Started 🚀
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+To run the project on an iOS or Android device:
+  1. Run the command to find your device id:
+```sh
+$ flutter devices
+```
+  2. Copy the device id you want to use then run then following command with the device id
+```sh
+$ flutter run -d <deviceID>
+```
+
+This project is not supported on web or desktop.
+
+---
+
+## Running Tests 🧪
+
+To run all unit and widget tests use the following command:
+
+```sh
+$ flutter test --coverage
+```
+
+To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov).
+
+```sh
+# Generate Coverage Report
+$ genhtml coverage/lcov.info -o coverage/
+
+# Open Coverage Report
+$ open coverage/index.html
+```
+
+To run the integration tests, run the following commands:
+
+```sh
+$ flutter test integration_test/scenarios/refresh_scenario.dart
+$ flutter test integration_test/scenarios/search_scenario.dart
+$ flutter test integration_test/scenarios/toggle_unit_scenario.dart
+```
+
+[very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
+[very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
+[very_good_ventures_link]: https://verygood.ventures/
+[jonathan_daniels_link]: https://jonathandaniels.info/

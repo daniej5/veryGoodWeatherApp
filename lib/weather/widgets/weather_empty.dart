@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
+/// {@template weather_empty}
+/// The page that is displayed if no city has been searched yet.
+/// {@endtemplate}
 class WeatherEmpty extends StatelessWidget {
+  /// {@macro weather_empty}
   const WeatherEmpty({Key? key}) : super(key: key);
 
   @override

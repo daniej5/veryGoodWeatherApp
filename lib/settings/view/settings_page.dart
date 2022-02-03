@@ -4,9 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:very_good_weather_app/weather/cubit/weather_cubit.dart';
 import 'package:very_good_weather_app/weather/models/weather.dart';
 
+/// {@template settings_page}
+/// A page which dispays a switch for the user to toggle between the
+/// metric and imperial system.
+/// {@endtemplate}
 class SettingsPage extends StatelessWidget {
+  /// {@macro settings_page}
   const SettingsPage({Key? key}) : super(key: key);
 
+  /// A function which returns a [MaterialPageRoute] to be passed
+  /// into [Navigator.push].
   static Route route(WeatherCubit weatherCubit) {
     return MaterialPageRoute<void>(
       builder: (_) => BlocProvider.value(

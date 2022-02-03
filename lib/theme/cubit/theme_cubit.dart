@@ -3,11 +3,17 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:very_good_weather_app/weather/models/models.dart';
 import 'package:weather_repository/weather_repository.dart' hide Weather;
 
+/// {@template theme_cubit}
+/// HydratedCubit which manages the theme's main color across app sessions
+/// {@endtemplate}
 class ThemeCubit extends HydratedCubit<Color> {
+  /// {@macro theme_cubit}
   ThemeCubit() : super(defaultColor);
 
+  /// Defaults to light blue
   static const defaultColor = Color(0xFF2196F3);
 
+  /// Given a weather object will update the primary theme color
   void updateTheme(Weather? weather) {
     if (weather != null) emit(weather.toColor);
   }

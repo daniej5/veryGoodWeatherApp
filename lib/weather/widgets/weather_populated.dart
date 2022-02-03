@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:very_good_weather_app/weather/weather.dart';
 
+/// {@template weather_populated}
+/// The page that is displayed when weather information for a certain city
+/// was successfully fetched.
+/// {@endtemplate}
 class WeatherPopulated extends StatelessWidget {
+  /// {@macro weather_populated}
   const WeatherPopulated({
     Key? key,
     required this.weather,
@@ -9,8 +14,13 @@ class WeatherPopulated extends StatelessWidget {
     required this.onRefresh,
   }) : super(key: key);
 
+  /// The current weather information for a city.
   final Weather weather;
+
+  /// Whether the temperature is displayed in metric or imperial.
   final TemperatureUnits units;
+
+  /// This method is called when the user pulls to refresh on the page.
   final ValueGetter<Future<void>> onRefresh;
 
   @override

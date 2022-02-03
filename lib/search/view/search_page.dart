@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
+/// A page which displays a search bar for the user to search the weather
+/// for a specific city.
 class SearchPage extends StatefulWidget {
   const SearchPage._({Key? key}) : super(key: key);
 
+  /// A function which returns a [MaterialPageRoute] to be passed
+  /// into [Navigator.push].
   static Route<String> route() {
     return MaterialPageRoute(builder: (_) => const SearchPage._());
   }
