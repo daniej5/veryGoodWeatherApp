@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 
+/// Observer which will print [Bloc] state changes
 class WeatherBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {

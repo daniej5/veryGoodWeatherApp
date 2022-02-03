@@ -5,5 +5,4 @@ analyzer:
 linter:
   rules:
     avoid_print: false
-    public_member_api_docs: false
 

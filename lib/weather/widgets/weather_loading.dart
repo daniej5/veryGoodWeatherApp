@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
+/// {@template weather_loading}
+/// The page that is displayed when currently fetching the weather.
+/// {@endtemplate}
 class WeatherLoading extends StatelessWidget {
+  /// {@macro weather_loading}
   const WeatherLoading({Key? key}) : super(key: key);
 
   @override
