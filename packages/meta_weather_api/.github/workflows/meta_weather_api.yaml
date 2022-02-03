@@ -1,4 +1,4 @@
-name: very_good_weather_app
+name: meta_weather_api
 on: 
   pull_request:
     types: [opened, reopened, synchronize]
