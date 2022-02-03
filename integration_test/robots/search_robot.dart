@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class SearchRobot {
@@ -5,9 +6,13 @@ class SearchRobot {
 
   final WidgetTester tester;
 
-  // Future<void> enterEmail(String email) async {
-  //   await tester.tap(find.byValueKey('emailTextField'));
-  //   await tester.enterText(email);
-  // }
+  Future<void> enterSearchTerm(String term) async {
+    await tester.enterText(find.byType(TextField), term);
+    await tester.pumpAndSettle();
+  }
 
+  Future<void> submitSearch() async {
+    await tester.tap(find.byIcon(Icons.search));
+    await tester.pumpAndSettle();
+  }
 }

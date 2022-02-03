@@ -10,10 +10,6 @@ import 'package:weather_repository/weather_repository.dart';
 
 // ignore: avoid_void_async
 void main() async {
-  await setupApp();
-}
-
-Future<void> setupApp() async {
   FlutterServicesBinding.ensureInitialized();
   final storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
@@ -21,10 +17,12 @@ Future<void> setupApp() async {
         : await getTemporaryDirectory(),
   );
   HydratedBlocOverrides.runZoned(
-    launchApp,
+    () => runApp(getWeatherApp()),
     blocObserver: WeatherBlocObserver(),
     storage: storage,
   );
 }
 
-void launchApp() => runApp(WeatherApp(weatherRepository: WeatherRepository()));
+WeatherApp getWeatherApp() {
+  return WeatherApp(weatherRepository: WeatherRepository());
+}

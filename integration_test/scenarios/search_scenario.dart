@@ -3,12 +3,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-// import '../robots/search_robot.dart';
-import '../robots/weather_robot.dart';
+import '../helpers/hydrated_bloc.dart';
+import '../robots/robots.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  // late SearchRobot searchRobot;
+
+  late SearchRobot searchRobot;
   late WeatherRobot weatherRobot;
 
   group(
@@ -18,10 +19,33 @@ void main() {
         'user is able to search for the weather by city',
         (WidgetTester tester) async {
           weatherRobot = WeatherRobot(tester);
-          // searchRobot = SearchRobot(tester);
+          searchRobot = SearchRobot(tester);
+          await fakeHydratedStorage(
+            () async {
+              await weatherRobot.launchApp();
+              await weatherRobot.navigateToSearchPage();
+              await searchRobot.enterSearchTerm('Las Vegas');
+              await searchRobot.submitSearch();
+              await weatherRobot.validateSuccessfulResult();
+            },
+          );
+        },
+      );
 
-          await weatherRobot.launchApp();
-          await weatherRobot.navigateToSearchPage();
+      testWidgets(
+        'user gets an error screen when searching for an invalid city',
+        (WidgetTester tester) async {
+          weatherRobot = WeatherRobot(tester);
+          searchRobot = SearchRobot(tester);
+          await fakeHydratedStorage(
+            () async {
+              await weatherRobot.launchApp();
+              await weatherRobot.navigateToSearchPage();
+              await searchRobot.enterSearchTerm('Invalid');
+              await searchRobot.submitSearch();
+              await weatherRobot.validateErrorResult();
+            },
+          );
         },
       );
     },
