@@ -42,6 +42,14 @@ $ genhtml coverage/lcov.info -o coverage/
 $ open coverage/index.html
 ```
 
+To run the integration tests, run the following commands:
+
+```sh
+$ flutter test integration_test/scenarios/refresh_scenario.dart
+$ flutter test integration_test/scenarios/search_scenario.dart
+$ flutter test integration_test/scenarios/toggle_unit_scenario.dart
+```
+
 [very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
 [very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
 [very_good_ventures_link]: https://verygood.ventures/
