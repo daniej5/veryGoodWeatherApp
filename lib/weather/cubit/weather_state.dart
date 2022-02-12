@@ -5,13 +5,13 @@ part of 'weather_cubit.dart';
 /// {@endtemplate}
 enum WeatherStatus {
   /// The initial loaded state. No city is selected.
-  initial,
+  empty,
 
   /// The state when currently fetching the weather for a city.
   loading,
 
   /// The weather information is displaying for the selected city.
-  success,
+  loaded,
 
   /// The weather information was attempted to be fetched, but the fetch failed.
   failure,
@@ -20,7 +20,8 @@ enum WeatherStatus {
 /// An extension which provides flag getters based on the [WeatherStatus]
 extension WeatherStatusX on WeatherStatus {
   /// Returns `true` if a city's weather information is loaded.
-  bool get isSuccess => this == WeatherStatus.success;
+  bool get isEmpty => this == WeatherStatus.empty;
+  bool get isFailure => this == WeatherStatus.failure;
 }
 
 /// {@template weather_state}
@@ -32,10 +33,10 @@ extension WeatherStatusX on WeatherStatus {
 class WeatherState extends Equatable {
   /// {@macro weather_state}
   WeatherState({
-    this.status = WeatherStatus.initial,
+    this.status = WeatherStatus.empty,
     this.temperatureUnits = TemperatureUnits.celsius,
-    Weather? weather,
-  }) : weather = weather ?? Weather.empty;
+    List<Weather>? weathers,
+  }) : weathers = weathers ?? <Weather>[];
 
   /// Given a valid json will return a [WeatherState] object.
   factory WeatherState.fromJson(Map<String, dynamic> json) =>
@@ -44,8 +45,8 @@ class WeatherState extends Equatable {
   /// {@macro weather_status}
   final WeatherStatus status;
 
-  /// The current weather information for a certain city.
-  final Weather weather;
+  /// The current weather information for a list of cities.
+  final List<Weather> weathers;
 
   /// Whether the temperature is displayed imperial or metric.
   final TemperatureUnits temperatureUnits;
@@ -54,12 +55,12 @@ class WeatherState extends Equatable {
   WeatherState copyWith({
     WeatherStatus? status,
     TemperatureUnits? temperatureUnits,
-    Weather? weather,
+    List<Weather>? weathers,
   }) {
     return WeatherState(
       status: status ?? this.status,
       temperatureUnits: temperatureUnits ?? this.temperatureUnits,
-      weather: weather ?? this.weather,
+      weathers: weathers ?? this.weathers,
     );
   }
 
@@ -67,5 +68,5 @@ class WeatherState extends Equatable {
   Map<String, dynamic> toJson() => _$WeatherStateToJson(this);
 
   @override
-  List<Object?> get props => [status, temperatureUnits, weather];
+  List<Object?> get props => [status, temperatureUnits, weathers];
 }

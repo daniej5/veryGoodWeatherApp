@@ -21,13 +21,15 @@ void main() {
   group('SettingsPage', () {
     late WeatherCubit weatherCubit;
     final weatherState = WeatherState(
-      status: WeatherStatus.success,
-      weather: Weather(
-        condition: WeatherCondition.clear,
-        lastUpdated: DateTime(0),
-        location: 'Las Vegas',
-        temperature: Temperature(value: 0),
-      ),
+      status: WeatherStatus.loaded,
+      weathers: [
+        Weather(
+          condition: WeatherCondition.clear,
+          lastUpdated: DateTime(0),
+          location: 'Las Vegas',
+          temperature: Temperature(value: 0),
+        ),
+      ],
     );
 
     setUp(() {
