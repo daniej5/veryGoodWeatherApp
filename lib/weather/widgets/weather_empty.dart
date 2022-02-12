@@ -10,15 +10,17 @@ class WeatherEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text('🏙️', style: TextStyle(fontSize: 64)),
-        Text(
-          'Please Select a City!',
-          style: theme.textTheme.headline5,
-        ),
-      ],
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text('🏙️', style: TextStyle(fontSize: 64)),
+          Text(
+            'Please Add a City!',
+            style: theme.textTheme.headline5,
+          ),
+        ],
+      ),
     );
   }
 }

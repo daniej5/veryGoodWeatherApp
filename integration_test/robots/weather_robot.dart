@@ -24,11 +24,11 @@ class WeatherRobot {
   }
 
   Future<void> validateSuccessfulResult() async {
-    expect(find.byType(WeatherPopulated), findsOneWidget);
+    expect(find.byType(WeatherList), findsOneWidget);
   }
 
   Future<void> validateErrorResult() async {
-    expect(find.byType(WeatherError), findsOneWidget);
+    expect(find.byType(SnackBar), findsOneWidget);
   }
 
   Future<void> validateMetricUnit() async {

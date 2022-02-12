@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:very_good_weather_app/weather/models/models.dart';
@@ -23,25 +24,23 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
   /// This method will fetch the weather given a city. It will emit a
   /// success state if a city is found, and will emit a failure state if the
   /// weather could not be fetched.
-  Future<void> fetchWeather(String? city) async {
+  Future<void> addWeather(String? city) async {
     if (city == null || city.isEmpty) return;
+
+    final cityAlreadyAdded = state.weathers.indexWhere(
+          (weather) => weather.location.toLowerCase() == city.toLowerCase(),
+        ) !=
+        -1;
+    if (cityAlreadyAdded) return;
 
     emit(state.copyWith(status: WeatherStatus.loading));
 
     try {
-      final weather = Weather.fromRepository(
-        await _weatherRepository.getWeather(city),
-      );
-      final units = state.temperatureUnits;
-      final value = units.isFahrenheit
-          ? weather.temperature.value.toFahrenheit()
-          : weather.temperature.value;
-
+      final weather = await fetchWeather(city);
       emit(
         state.copyWith(
-          status: WeatherStatus.success,
-          temperatureUnits: units,
-          weather: weather.copyWith(temperature: Temperature(value: value)),
+          status: WeatherStatus.loaded,
+          weathers: [...state.weathers, weather],
         ),
       );
     } on Exception {
@@ -52,22 +51,18 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
   /// This method is meant to update the current city's weather information.
   /// If no city selected will do nothing.
   Future<void> refreshWeather() async {
-    if (!state.status.isSuccess) return;
-    if (state.weather == Weather.empty) return;
+    if (state.status.isEmpty) return;
     try {
-      final weather = Weather.fromRepository(
-        await _weatherRepository.getWeather(state.weather.location),
+      final weathers = await Future.wait<Weather>(
+        state.weathers
+            .map((weather) async => fetchWeather(weather.location))
+            .toList(),
       );
-      final units = state.temperatureUnits;
-      final value = units.isFahrenheit
-          ? weather.temperature.value.toFahrenheit()
-          : weather.temperature.value;
 
       emit(
         state.copyWith(
-          status: WeatherStatus.success,
-          temperatureUnits: units,
-          weather: weather.copyWith(temperature: Temperature(value: value)),
+          status: WeatherStatus.loaded,
+          weathers: weathers,
         ),
       );
     } on Exception {
@@ -81,24 +76,64 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
         ? TemperatureUnits.celsius
         : TemperatureUnits.fahrenheit;
 
-    if (!state.status.isSuccess) {
+    if (state.weathers.isEmpty) {
       emit(state.copyWith(temperatureUnits: units));
       return;
     }
 
-    final weather = state.weather;
-    if (weather != Weather.empty) {
-      final temperature = weather.temperature;
-      final value = units.isCelsius
-          ? temperature.value.toCelsius()
-          : temperature.value.toFahrenheit();
-      emit(
-        state.copyWith(
-          temperatureUnits: units,
-          weather: weather.copyWith(temperature: Temperature(value: value)),
-        ),
-      );
-    }
+    final convertedWeathers = state.weathers.map<Weather>(
+      (weather) {
+        final temperature = weather.temperature;
+        final value = units.isCelsius
+            ? temperature.value.toCelsius()
+            : temperature.value.toFahrenheit();
+        return weather.copyWith(temperature: Temperature(value: value));
+      },
+    ).toList();
+
+    emit(
+      state.copyWith(
+        temperatureUnits: units,
+        weathers: convertedWeathers,
+      ),
+    );
+  }
+
+  void removeWeather(Weather weather) {
+    final filteredWeathers = state.weathers
+        .where(
+          (w) => w.location != weather.location,
+        )
+        .toList();
+    final status =
+        filteredWeathers.isEmpty ? WeatherStatus.empty : WeatherStatus.loaded;
+    emit(
+      state.copyWith(
+        status: status,
+        weathers: filteredWeathers,
+      ),
+    );
+  }
+
+  @visibleForTesting
+  Future<Weather> fetchWeather(String city) async {
+    final initialWeather = Weather.fromRepository(
+      await _weatherRepository.getWeather(city),
+    );
+    final units = state.temperatureUnits;
+    final value = units.isFahrenheit
+        ? initialWeather.temperature.value.toFahrenheit()
+        : initialWeather.temperature.value;
+    final convertedWeather = initialWeather.copyWith(
+      temperature: Temperature(value: value),
+    );
+    return convertedWeather;
+  }
+
+  void reloadWeatherAfterFailure() {
+    final status =
+        state.weathers.isEmpty ? WeatherStatus.empty : WeatherStatus.loaded;
+    emit(state.copyWith(status: status));
   }
 
   @override
