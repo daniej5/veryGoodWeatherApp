@@ -21,6 +21,8 @@ enum WeatherStatus {
 extension WeatherStatusX on WeatherStatus {
   /// Returns `true` if a city's weather information is loaded.
   bool get isEmpty => this == WeatherStatus.empty;
+
+  /// Returns `true` if a city's weather information could not be fetched.
   bool get isFailure => this == WeatherStatus.failure;
 }
 

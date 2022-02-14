@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:very_good_weather_app/weather/weather.dart';
 
+/// {@template weather_list}
+/// A Widget which displays a list of weather cards for user added cities.
+/// {@endtemplate}
 class WeatherList extends StatelessWidget {
+  /// {@macro weather_list}
   const WeatherList({Key? key}) : super(key: key);
 
   @override
