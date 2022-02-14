@@ -5,7 +5,12 @@ import 'package:very_good_weather_app/settings/settings.dart';
 import 'package:very_good_weather_app/weather/weather.dart';
 import 'package:weather_repository/weather_repository.dart';
 
+/// {@template weather_page}
+/// The widget which is meant to provide over the state information to the main
+/// [WeatherView].
+/// {@endtemplate}
 class WeatherPage extends StatelessWidget {
+  /// {@macro weather_page}
   const WeatherPage({Key? key}) : super(key: key);
 
   @override
@@ -19,7 +24,13 @@ class WeatherPage extends StatelessWidget {
   }
 }
 
+/// {@template weather_view}
+/// The main scaffold view of the weather page. This widget decides whether to
+/// display a intial screen, a loading screen, and error screen, or the
+/// [WeatherList] screen.
+/// {@endtemplate}
 class WeatherView extends StatelessWidget {
+  /// {@macro weather_view}
   const WeatherView({Key? key}) : super(key: key);
 
   @override

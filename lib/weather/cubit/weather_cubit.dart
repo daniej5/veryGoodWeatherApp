@@ -99,6 +99,7 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
     );
   }
 
+  /// This method will remove a given weather card from the main WeatherPage
   void removeWeather(Weather weather) {
     final filteredWeathers = state.weathers
         .where(
@@ -115,6 +116,7 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
     );
   }
 
+  /// Helper method meant to be used to fetch and reload weather.
   @visibleForTesting
   Future<Weather> fetchWeather(String city) async {
     final initialWeather = Weather.fromRepository(
@@ -130,6 +132,8 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
     return convertedWeather;
   }
 
+  /// Method which reloads the weather list page after a failure in adding
+  ///  a weather card.
   void reloadWeatherAfterFailure() {
     final status =
         state.weathers.isEmpty ? WeatherStatus.empty : WeatherStatus.loaded;
